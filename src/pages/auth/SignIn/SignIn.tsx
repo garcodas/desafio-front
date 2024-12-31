@@ -66,7 +66,12 @@ const SignIn = () => {
       dispatch(setUser(response.data.data.User));
       setCookie(AUTH_COOKIE_NAME, response.data.data.Token);
 
-      navigate("/product-category");
+      if (response.data.data.User.RoleId === 1) {
+        navigate("/product-category");
+        return;
+      }
+
+      navigate("/store");
 
       toast({
         title: `Bienvenido ${response.data.data.User.FullName}`,

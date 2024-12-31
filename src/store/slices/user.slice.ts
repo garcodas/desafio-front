@@ -22,6 +22,7 @@ const userSlice = createSlice({
       state.BirthDate = action.payload.BirthDate;
       state.Phone = action.payload.Phone;
       state.Token = action.payload.Token;
+      state.RoleId = action.payload.RoleId;
     },
     logOut: (state) => {
       state.FullName = "";
