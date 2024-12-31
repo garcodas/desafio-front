@@ -7,6 +7,8 @@ const initialState: User = {
   Email: "",
   BirthDate: new Date(),
   Phone: "",
+  Token: "",
+  RoleId: 0,
 };
 
 const userSlice = createSlice({
@@ -14,16 +16,19 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
+      state.Id = action.payload.Id;
       state.FullName = action.payload.FullName;
       state.Email = action.payload.Email;
       state.BirthDate = action.payload.BirthDate;
       state.Phone = action.payload.Phone;
+      state.Token = action.payload.Token;
     },
     logOut: (state) => {
       state.FullName = "";
       state.Email = "";
       state.BirthDate = new Date();
       state.Phone = "";
+      state.Token = "";
     },
   },
 });

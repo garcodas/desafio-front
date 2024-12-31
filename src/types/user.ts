@@ -4,6 +4,23 @@ interface User {
   BirthDate: Date;
   Email: string;
   Phone: string;
+  RoleId: number;
+  Token?: string;
 }
 
-export type { User };
+interface RegisterUser extends User {
+  DeliveryAddress: string;
+  Password: string;
+}
+
+interface LoginUser {
+  Email: string;
+  Password: string;
+}
+
+interface LoginUserResponse {
+  Token: string;
+  User: User;
+}
+
+export type { User, RegisterUser, LoginUser, LoginUserResponse };
