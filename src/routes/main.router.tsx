@@ -12,6 +12,7 @@ const mainRouter: RouteObject = {
       element: <ProtectedRoute />,
       children: [
         {
+          path: "admin",
           element: <OnlyAdmins />,
           children: [
             {
@@ -21,7 +22,7 @@ const mainRouter: RouteObject = {
           ],
         },
         {
-          path: "store",
+          path: "",
           element: <Store />,
         },
       ],

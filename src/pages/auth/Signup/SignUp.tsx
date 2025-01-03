@@ -17,57 +17,27 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterUser } from "@/types/user";
 import { registerUser } from "@/services/authService";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { Link, useNavigate } from "react-router-dom";
-import { Role } from "@/types/role";
-import { getRoles } from "@/services/roleService";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import ReactDatePicker, { registerLocale } from "react-datepicker";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
-
-const signupSchema = Yup.object().shape({
-  FullName: Yup.string().required("Tu nombre es obligatorio"),
-  Password: Yup.string()
-    .min(8, "La contraseña debe tener al menos 8 caracteres")
-    .required("La contraseña es obligatoria"),
-  BirthDate: Yup.date().required("Tu fecha de nacimiento es obligatoria"),
-  DeliveryAddress: Yup.string().required(
-    "La dirección de entrega es obligatoria"
-  ),
-  Phone: Yup.string().required("Tu número de teléfono es obligatorio"),
-  Email: Yup.string()
-    .required("Tu correo electrónico es obligatorio")
-    .email("El correo electrónico no es válido"),
-  RoleId: Yup.string().required("El rol es obligatorio"),
-});
+import "react-datepicker/dist/react-datepicker.css";
+import { es } from "date-fns/locale/es";
+import { SignUpFormValues, signupSchema } from "@/lib/schemas/signup";
+registerLocale("es", es);
 
 const SignUp = () => {
-  const [roles, setRoles] = useState<Role[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const form = useForm<Yup.InferType<typeof signupSchema>>({
+  const form = useForm<SignUpFormValues>({
     resolver: yupResolver(signupSchema),
     defaultValues: {
       FullName: "",
@@ -78,15 +48,16 @@ const SignUp = () => {
     },
   });
 
-  async function onSubmit(values: Yup.InferType<typeof signupSchema>) {
+  async function onSubmit(values: SignUpFormValues) {
     try {
       setIsSubmitting(true);
 
       const userData: RegisterUser = {
         ...values,
-        RoleId: +values.RoleId,
       };
       await registerUser(userData);
+
+      form.reset();
 
       toast({
         title: "Usuario creado",
@@ -116,27 +87,6 @@ const SignUp = () => {
       setIsSubmitting(false);
     }
   }
-
-  const fetchRoles = useCallback(async () => {
-    try {
-      const response = await getRoles();
-
-      setRoles(response.data.data);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description:
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (error as any).response?.data?.error ||
-          "An unexpected error occurred",
-        variant: "destructive",
-      });
-    }
-  }, [toast]);
-
-  useEffect(() => {
-    fetchRoles();
-  }, [fetchRoles]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -180,40 +130,38 @@ const SignUp = () => {
               <FormField
                 control={form.control}
                 name="BirthDate"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
+                render={() => (
+                  <FormItem className="flex flex-col w-full">
                     <FormLabel>Fecha de nacimiento</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
+                    <FormControl className="w-full">
+                      <Controller
+                        name="BirthDate"
+                        control={form.control}
+                        render={({ field: controllerField }) => (
+                          <ReactDatePicker
+                            locale="es"
+                            selected={controllerField.value}
+                            onChange={(date) => controllerField.onChange(date)}
+                            showYearDropdown
+                            yearDropdownItemNumber={100}
+                            scrollableYearDropdown
+                            dateFormat="dd/MM/yyyy"
+                            minDate={new Date("1900-01-01")}
+                            maxDate={
+                              new Date(
+                                new Date().getFullYear() - 18,
+                                new Date().getMonth(),
+                                new Date().getDate()
+                              )
+                            }
                             className={cn(
-                              "w-full pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
+                              "w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+                              !controllerField.value && "text-muted-foreground"
                             )}
-                          >
-                            {field.value ? (
-                              format(field.value, "dd/MM/yyyy")
-                            ) : (
-                              <span>Selecciona tu fecha de nacimiento</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
+                          />
+                        )}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -227,33 +175,6 @@ const SignUp = () => {
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="RoleId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Rol</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecciona un rol" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {roles.map((role) => (
-                          <SelectItem key={role.Id} value={role.Id.toString()}>
-                            {role.Name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

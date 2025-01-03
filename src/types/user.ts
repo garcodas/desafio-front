@@ -1,11 +1,11 @@
 interface User {
-  Id?: string;
+  Id?: number;
   FullName: string;
   BirthDate: Date;
   Email: string;
   Phone: string;
-  RoleId: number;
   Token?: string;
+  RoleId?: number;
 }
 
 interface RegisterUser extends User {
@@ -19,7 +19,6 @@ interface LoginUser {
 }
 
 interface LoginUserResponse {
-  Token: string;
   User: User;
 }
 

@@ -17,28 +17,21 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { SignInFormValues, signinSchema } from "@/lib/schemas/signin";
 import { loginUser } from "@/services/authService";
 import { setCookie } from "@/services/cookieService";
 import { setUser } from "@/store/slices/user.slice";
 import { AppDispatch } from "@/store/store";
 import { LoginUser } from "@/types/user";
-import { AUTH_COOKIE_NAME } from "@/utils/constants/auth.constant";
+import {
+  AUTH_COOKIE_NAME,
+  AUTH_STORAGE_TOKEN_NAME,
+} from "@/utils/constants/auth.constant";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-
-const signinSchema = Yup.object().shape({
-  Password: Yup.string()
-    .min(8, "La contraseña debe tener al menos 8 caracteres")
-    .required("La contraseña es obligatoria"),
-
-  Email: Yup.string()
-    .required("Tu correo electrónico es obligatorio")
-    .email("El correo electrónico no es válido"),
-});
 
 const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,7 +39,7 @@ const SignIn = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
-  const form = useForm<Yup.InferType<typeof signinSchema>>({
+  const form = useForm<SignInFormValues>({
     resolver: yupResolver(signinSchema),
     defaultValues: {
       Password: "",
@@ -54,7 +47,7 @@ const SignIn = () => {
     },
   });
 
-  async function onSubmit(values: Yup.InferType<typeof signinSchema>) {
+  async function onSubmit(values: SignInFormValues) {
     try {
       setIsSubmitting(true);
 
@@ -64,14 +57,19 @@ const SignIn = () => {
       const response = await loginUser(userData);
 
       dispatch(setUser(response.data.data.User));
-      setCookie(AUTH_COOKIE_NAME, response.data.data.Token);
+      setCookie(AUTH_COOKIE_NAME, response.data.data.User.Token ?? "");
+
+      localStorage.setItem(
+        AUTH_STORAGE_TOKEN_NAME,
+        response.data.data.User.Token ?? ""
+      );
 
       if (response.data.data.User.RoleId === 1) {
-        navigate("/product-category");
+        navigate("/admin/product-category");
         return;
       }
 
-      navigate("/store");
+      navigate("/");
 
       toast({
         title: `Bienvenido ${response.data.data.User.FullName}`,
@@ -136,7 +134,7 @@ const SignIn = () => {
                   to="/auth/signup"
                   className="text-blue-500 hover:text-blue-700"
                 >
-                  Iniciar Sesión
+                  Registrarse
                 </Link>
               </p>
             </CardFooter>

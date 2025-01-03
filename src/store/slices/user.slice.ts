@@ -24,7 +24,7 @@ const userSlice = createSlice({
       state.Token = action.payload.Token;
       state.RoleId = action.payload.RoleId;
     },
-    logOut: (state) => {
+    logOutUser: (state) => {
       state.FullName = "";
       state.Email = "";
       state.BirthDate = new Date();
@@ -34,5 +34,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, logOut } = userSlice.actions;
+export const { setUser, logOutUser } = userSlice.actions;
 export default userSlice.reducer;
