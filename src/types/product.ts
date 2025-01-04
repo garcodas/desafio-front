@@ -1,0 +1,37 @@
+import { ProductFormValues } from "@/lib/schemas/product";
+
+interface Product {
+  Id?: number;
+  Name: string;
+  Brand: string;
+  BarCode: string;
+  Stock: number;
+  Price: number;
+  ImageUrl: string;
+  StatusId: number;
+  UserId: number;
+  ProductCategoryId: number;
+  CreatedAt?: Date;
+  ModifiedAt?: Date;
+}
+
+interface ProductListProps {
+  products: Product[];
+  onSuccess?: () => void;
+}
+
+interface AddProductModalProps {
+  onSuccess: () => void;
+}
+
+interface ProductFormProps {
+  initialData?: ProductFormValues | Partial<ProductFormValues>;
+  onSuccess?: () => void;
+}
+
+export type {
+  Product,
+  ProductListProps,
+  AddProductModalProps,
+  ProductFormProps,
+};

@@ -8,12 +8,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import ProductCategoryForm from "./ProductCategoryForm";
-import { AddProductCategoryModalProps } from "@/types/productCategory";
+import ProductForm from "./ProductForm";
+import { AddProductModalProps } from "@/types/product";
 
-const AddProductCategoryModal = ({
-  onSuccess,
-}: AddProductCategoryModalProps) => {
+const AddProductModal = ({ onSuccess }: AddProductModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSuccess = () => {
@@ -23,20 +21,20 @@ const AddProductCategoryModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Nueva Categoria</Button>
+        <Button>Nuevo Producto</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Nueva Categoria</DialogTitle>
+          <DialogTitle>Agregar Nuevo Producto</DialogTitle>
           <DialogDescription>
-            Crea una nueva categoría de producto aquí. Haz clic en Guardar
-            cuando hayas terminado.
+            Crea un nuevo producto aquí. Haz clic en Guardar cuando hayas
+            terminado.
           </DialogDescription>
         </DialogHeader>
-        <ProductCategoryForm onSuccess={handleSuccess} />
+        <ProductForm onSuccess={handleSuccess} />
       </DialogContent>
     </Dialog>
   );
 };
 
-export default AddProductCategoryModal;
+export default AddProductModal;

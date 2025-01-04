@@ -73,7 +73,9 @@ const Navbar = () => {
                     <DropdownMenuItem>Historial de Ordenes</DropdownMenuItem>
                     <DropdownMenuItem>Ordenes Pendientes</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Productos</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => goTo("/admin/product")}>
+                      Productos
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => goTo("/admin/product-category")}
                     >

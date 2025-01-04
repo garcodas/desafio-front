@@ -22,4 +22,14 @@ interface CategoryListProps {
   onSuccess?: () => void;
 }
 
-export type { Category, CategoryListProps, CreateCateogory, UpdateCategory };
+interface AddProductCategoryModalProps {
+  onSuccess?: () => void;
+}
+
+export type {
+  Category,
+  CategoryListProps,
+  CreateCateogory,
+  UpdateCategory,
+  AddProductCategoryModalProps,
+};

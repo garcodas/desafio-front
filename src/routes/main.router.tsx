@@ -1,6 +1,7 @@
 import Layout from "@/components/app/Layout/Layout";
 import OnlyAdmins from "@/pages/auth/OnlyAdmins/OnlyAdmins";
 import ProtectedRoute from "@/pages/auth/ProtectedRoute/ProtectedRoute";
+import Product from "@/pages/Product/Product";
 import ProductCategory from "@/pages/ProductCategory/ProductCategory";
 import Store from "@/pages/Store/Store";
 import { RouteObject } from "react-router-dom";
@@ -18,6 +19,10 @@ const mainRouter: RouteObject = {
             {
               path: "product-category",
               element: <ProductCategory />,
+            },
+            {
+              path: "product",
+              element: <Product />,
             },
           ],
         },

@@ -15,7 +15,7 @@ const loginUser = async (data: LoginUser) => {
 };
 
 const logOut = async () => {
-  return await apiClient.post(`${VITE_API_URL}/auth/signout`);
+  return await apiClient.post(`/auth/signout`);
 };
 
 export { registerUser, loginUser, logOut };

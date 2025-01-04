@@ -97,7 +97,6 @@ const ProductCategoryForm = ({
   }
 
   const fetchSatatuses = useCallback(async () => {
-    // Fetch statuses from API
     const response: { data: Status[] } = await getStatuses();
     setStatuses(response.data);
   }, []);
