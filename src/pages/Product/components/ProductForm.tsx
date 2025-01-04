@@ -27,10 +27,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { createProduct } from "@/services/productService";
+import { createProduct, updateProduct } from "@/services/productService";
 import { Product, ProductFormProps } from "@/types/product";
 
-const ProductForm = ({ initialData, onSuccess }: ProductFormProps) => {
+const ProductForm = ({ initialData, onSuccess, Id }: ProductFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [statuses, setStatuses] = useState<Status[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -68,13 +68,19 @@ const ProductForm = ({ initialData, onSuccess }: ProductFormProps) => {
         ProductCategoryId: values.ProductCategoryId,
         UserId: user.Id ?? 0,
       };
-
-      await createProduct(product);
-
-      toast({
-        title: "Categoria creada",
-        description: "La categoria ha sido creada con exito",
-      });
+      if (!initialData) {
+        await createProduct(product);
+        toast({
+          title: "Producto creado",
+          description: "El producto ha sido creado con exito.",
+        });
+      } else {
+        await updateProduct(Id ?? 0, product);
+        toast({
+          title: "Producto actualizado",
+          description: "El producto ha sido actualizado con exito.",
+        });
+      }
 
       onSuccess?.();
     } catch (error) {

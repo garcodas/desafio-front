@@ -39,7 +39,11 @@ const EditProductModal = ({ product, onSuccess }: EditProductModalProps) => {
             haya terminado.
           </DialogDescription>
         </DialogHeader>
-        <ProductForm initialData={product} onSuccess={handleSuccess} />
+        <ProductForm
+          Id={product.Id}
+          initialData={product}
+          onSuccess={handleSuccess}
+        />
       </DialogContent>
     </Dialog>
   );

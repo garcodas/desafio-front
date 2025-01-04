@@ -25,6 +25,7 @@ interface AddProductModalProps {
 }
 
 interface ProductFormProps {
+  Id?: number;
   initialData?: ProductFormValues | Partial<ProductFormValues>;
   onSuccess?: () => void;
 }
