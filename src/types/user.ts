@@ -9,7 +9,6 @@ interface User {
 }
 
 interface RegisterUser extends User {
-  DeliveryAddress: string;
   Password: string;
 }
 

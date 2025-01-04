@@ -42,7 +42,6 @@ const SignUp = () => {
     defaultValues: {
       FullName: "",
       Password: "",
-      DeliveryAddress: "",
       Phone: "",
       Email: "",
     },
@@ -166,19 +165,7 @@ const SignUp = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="DeliveryAddress"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Dirección de Entrega</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <FormField
                 control={form.control}
                 name="Phone"
