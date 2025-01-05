@@ -7,6 +7,10 @@ const registerUser = async (data: RegisterUser) => {
   return await axios.post(`${VITE_API_URL}/auth/signup`, data);
 };
 
+const registerAdmin = async (data: RegisterUser) => {
+  return await axios.post(`${VITE_API_URL}/auth/signup/admin`, data);
+};
+
 const loginUser = async (data: LoginUser) => {
   return await axios.post<{ data: LoginUserResponse }>(
     `${VITE_API_URL}/auth/signin`,
@@ -18,4 +22,4 @@ const logOut = async () => {
   return await apiClient.post(`/auth/signout`);
 };
 
-export { registerUser, loginUser, logOut };
+export { registerUser, loginUser, logOut, registerAdmin };

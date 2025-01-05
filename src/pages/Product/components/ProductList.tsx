@@ -24,7 +24,7 @@ import numeral from "numeral";
 import { VITE_API_URL } from "@/config/envs";
 import { deleteProduct } from "@/services/productService";
 import { useToast } from "@/hooks/use-toast";
-import { ProductListProps } from "@/types/product";
+import { Product, ProductListProps } from "@/types/product";
 
 const ProductList = ({
   products: initialProducts,
@@ -72,11 +72,13 @@ const ProductList = ({
             <TableHead>Marca</TableHead>
             <TableHead>Stock</TableHead>
             <TableHead>Precio</TableHead>
+            <TableHead>Categoria</TableHead>
+            <TableHead>Estado</TableHead>
             <TableHead>Acciones</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.map((product) => (
+          {products.map((product: Product) => (
             <TableRow key={product.Id}>
               <TableCell>{product.Id}</TableCell>
               <TableCell>
@@ -94,6 +96,8 @@ const ProductList = ({
               <TableCell>
                 Q {numeral(product.Price).format("Q0,0.00")}
               </TableCell>
+              <TableCell>{product.ProductCategory?.Name}</TableCell>
+              <TableCell>{product.Status?.Name}</TableCell>
               <TableCell>
                 <EditProductModal
                   product={product}

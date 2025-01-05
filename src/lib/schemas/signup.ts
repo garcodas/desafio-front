@@ -10,6 +10,7 @@ export const signupSchema = Yup.object().shape({
   Email: Yup.string()
     .required("Tu correo electrónico es obligatorio")
     .email("El correo electrónico no es válido"),
+  CopyPermissions: Yup.boolean().optional(),
 });
 
 export type SignUpFormValues = Yup.InferType<typeof signupSchema>;

@@ -28,12 +28,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-const categories = [
-  { name: "Electronics", href: "/category/electronics" },
-  { name: "Clothing", href: "/category/clothing" },
-  { name: "Books", href: "/category/books" },
-  { name: "Home & Garden", href: "/category/home-garden" },
-];
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -73,6 +67,12 @@ const Navbar = () => {
                     <DropdownMenuItem>Historial de Ordenes</DropdownMenuItem>
                     <DropdownMenuItem>Ordenes Pendientes</DropdownMenuItem>
                     <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => goTo("/admin/users")}>
+                      Usuarios
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => goTo("/admin/clients")}>
+                      Clientes
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => goTo("/admin/product")}>
                       Productos
                     </DropdownMenuItem>
@@ -84,15 +84,6 @@ const Navbar = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
-              {categories.map((category) => (
-                <Link
-                  key={category.name}
-                  to={category.href}
-                  className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  {category.name}
-                </Link>
-              ))}
             </div>
           </div>
           <div className="hidden sm:flex items-center">
@@ -113,10 +104,12 @@ const Navbar = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Orders</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => goTo("/client")}>
+                  Cliente
+                </DropdownMenuItem>
+                <DropdownMenuItem>Ordenes</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => logOutf()}>
                   Cerrar Sesión
@@ -160,15 +153,6 @@ const Navbar = () => {
               placeholder="Search products..."
               className="w-full mb-2"
             />
-            {categories.map((category) => (
-              <Link
-                key={category.name}
-                to={category.href}
-                className="text-gray-500 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
-              >
-                {category.name}
-              </Link>
-            ))}
 
             {user.RoleId === 1 && (
               <>
@@ -185,10 +169,16 @@ const Navbar = () => {
                   Ordenes Pendientes
                 </Link>
                 <Link
-                  to="/admin/products"
+                  to="/admin/users"
                   className="text-gray-500 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
                 >
-                  Ordenes Pendientes
+                  Usuarios
+                </Link>
+                <Link
+                  to="/admin/clients"
+                  className="text-gray-500 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+                >
+                  Clientes
                 </Link>
                 <Link
                   to="/admin/category-products"
@@ -199,10 +189,10 @@ const Navbar = () => {
               </>
             )}
             <Link
-              to="/account"
+              to="/client"
               className="text-gray-500 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
             >
-              My Account
+              Cliente
             </Link>
           </div>
         </div>

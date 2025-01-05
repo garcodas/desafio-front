@@ -1,3 +1,6 @@
+import { Role } from "./role";
+import { Status } from "./status";
+
 interface User {
   Id?: number;
   FullName: string;
@@ -6,6 +9,14 @@ interface User {
   Phone: string;
   Token?: string;
   RoleId?: number;
+  StatusId?: number;
+  Role?: Role;
+  Status?: Status;
+}
+
+interface UserListProps {
+  users: User[];
+  onSuccess?: () => void;
 }
 
 interface RegisterUser extends User {
@@ -21,4 +32,21 @@ interface LoginUserResponse {
   User: User;
 }
 
-export type { User, RegisterUser, LoginUser, LoginUserResponse };
+interface AddUserModalProps {
+  onSuccess: () => void;
+}
+
+interface AddUserFormProps {
+  onSuccess: () => void;
+  session: boolean;
+}
+
+export type {
+  User,
+  RegisterUser,
+  LoginUser,
+  LoginUserResponse,
+  UserListProps,
+  AddUserModalProps,
+  AddUserFormProps,
+};

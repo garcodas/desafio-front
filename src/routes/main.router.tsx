@@ -1,9 +1,12 @@
 import Layout from "@/components/app/Layout/Layout";
 import OnlyAdmins from "@/pages/auth/OnlyAdmins/OnlyAdmins";
 import ProtectedRoute from "@/pages/auth/ProtectedRoute/ProtectedRoute";
+import Client from "@/pages/Client/Client";
+import ProfileClient from "@/pages/Client/ProfileClient";
 import Product from "@/pages/Product/Product";
 import ProductCategory from "@/pages/ProductCategory/ProductCategory";
 import Store from "@/pages/Store/Store";
+import User from "@/pages/User/User";
 import { RouteObject } from "react-router-dom";
 
 const mainRouter: RouteObject = {
@@ -24,11 +27,23 @@ const mainRouter: RouteObject = {
               path: "product",
               element: <Product />,
             },
+            {
+              path: "users",
+              element: <User />,
+            },
+            {
+              path: "clients",
+              element: <Client />,
+            },
           ],
         },
         {
           path: "",
           element: <Store />,
+        },
+        {
+          path: "client",
+          element: <ProfileClient />,
         },
       ],
     },

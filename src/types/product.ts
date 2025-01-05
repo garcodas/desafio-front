@@ -1,4 +1,6 @@
 import { ProductFormValues } from "@/lib/schemas/product";
+import { Status } from "./status";
+import { Category } from "./productCategory";
 
 interface Product {
   Id?: number;
@@ -13,6 +15,8 @@ interface Product {
   ProductCategoryId: number;
   CreatedAt?: Date;
   ModifiedAt?: Date;
+  Status?: Status;
+  ProductCategory?: Category;
 }
 
 interface ProductListProps {

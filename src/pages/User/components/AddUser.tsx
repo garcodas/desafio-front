@@ -7,11 +7,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { AddUserModalProps } from "@/types/user";
 import { useState } from "react";
-import ProductForm from "./ProductForm";
-import { AddProductModalProps } from "@/types/product";
+import AddUserForm from "./AddUserForm";
 
-const AddProductModal = ({ onSuccess }: AddProductModalProps) => {
+const AddUserModal = ({ onSuccess }: AddUserModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSuccess = () => {
@@ -21,20 +21,20 @@ const AddProductModal = ({ onSuccess }: AddProductModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Nuevo Producto</Button>
+        <Button>Nuevo Usuario</Button>
       </DialogTrigger>
-      <DialogContent className="h-screen max-w-full md:max-w-[425px] overflow-y-auto">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Agregar Nuevo Producto</DialogTitle>
+          <DialogTitle>Agregar Nuevo Usuario</DialogTitle>
           <DialogDescription>
-            Crea un nuevo producto aquí. Haz clic en Guardar cuando hayas
+            Crea un nuevo usuario aquí. Haz clic en Guardar cuando hayas
             terminado.
           </DialogDescription>
         </DialogHeader>
-        <ProductForm onSuccess={handleSuccess} />
+        <AddUserForm session onSuccess={handleSuccess} />
       </DialogContent>
     </Dialog>
   );
 };
 
-export default AddProductModal;
+export default AddUserModal;
