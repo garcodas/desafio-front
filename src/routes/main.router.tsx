@@ -3,6 +3,7 @@ import OnlyAdmins from "@/pages/auth/OnlyAdmins/OnlyAdmins";
 import ProtectedRoute from "@/pages/auth/ProtectedRoute/ProtectedRoute";
 import Client from "@/pages/Client/Client";
 import ProfileClient from "@/pages/Client/ProfileClient";
+import Order from "@/pages/Order/Order";
 import Product from "@/pages/Product/Product";
 import ProductCategory from "@/pages/ProductCategory/ProductCategory";
 import Store from "@/pages/Store/Store";
@@ -44,6 +45,10 @@ const mainRouter: RouteObject = {
         {
           path: "client",
           element: <ProfileClient />,
+        },
+        {
+          path: "orders",
+          element: <Order />,
         },
       ],
     },

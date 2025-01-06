@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/sheet";
 import { logOut } from "@/services/authService";
 import { removeCookie } from "@/services/cookieService";
+import { toggleChart } from "@/store/slices/cart.slice";
 import { logOutUser } from "@/store/slices/user.slice";
 import { RootState } from "@/store/store";
 import {
@@ -64,8 +65,9 @@ const Navbar = () => {
                     Administrador
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>Historial de Ordenes</DropdownMenuItem>
-                    <DropdownMenuItem>Ordenes Pendientes</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => goTo("/orders")}>
+                      Ordenes
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => goTo("/admin/users")}>
                       Usuarios
@@ -87,14 +89,12 @@ const Navbar = () => {
             </div>
           </div>
           <div className="hidden sm:flex items-center">
-            <div className="flex-shrink-0">
-              <Input
-                type="search"
-                placeholder="Search products..."
-                className="w-64 mr-4"
-              />
-            </div>
-            <Button variant="ghost" size="icon" className="mr-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="mr-2"
+              onClick={() => dispatch(toggleChart())}
+            >
               <ShoppingCart className="h-5 w-5" />
             </Button>
             <DropdownMenu>
@@ -109,7 +109,9 @@ const Navbar = () => {
                 <DropdownMenuItem onClick={() => goTo("/client")}>
                   Cliente
                 </DropdownMenuItem>
-                <DropdownMenuItem>Ordenes</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => goTo("/orders")}>
+                  Ordenes
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => logOutf()}>
                   Cerrar Sesión
@@ -157,16 +159,10 @@ const Navbar = () => {
             {user.RoleId === 1 && (
               <>
                 <Link
-                  to="/admin/order-history"
+                  to="/orders"
                   className="text-gray-500 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
                 >
-                  Historial de Ordenes
-                </Link>
-                <Link
-                  to="/admin/order-pending"
-                  className="text-gray-500 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  Ordenes Pendientes
+                  Ordenes
                 </Link>
                 <Link
                   to="/admin/users"

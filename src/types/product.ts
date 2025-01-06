@@ -17,6 +17,7 @@ interface Product {
   ModifiedAt?: Date;
   Status?: Status;
   ProductCategory?: Category;
+  OrderQty?: number;
 }
 
 interface ProductListProps {

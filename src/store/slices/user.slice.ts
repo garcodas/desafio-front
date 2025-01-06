@@ -27,7 +27,6 @@ const userSlice = createSlice({
     logOutUser: (state) => {
       state.FullName = "";
       state.Email = "";
-      state.BirthDate = new Date();
       state.Phone = "";
       state.Token = "";
     },

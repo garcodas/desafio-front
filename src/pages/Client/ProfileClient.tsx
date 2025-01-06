@@ -45,7 +45,10 @@ const ProfileClient = () => {
             Debes crear un perfil de cliente para hacer ordenes
           </CardDescription>
           {showAlert && (
-            <ClientDeactivatedAlert message="Tu perfil fue desactivado, significa que no puedes realizar ordenes. Por favor ponte en contacto con soporte técnico." />
+            <ClientDeactivatedAlert
+              title="Perfil desactivado"
+              message="Tu perfil fue desactivado, significa que no puedes realizar ordenes. Por favor ponte en contacto con soporte técnico."
+            />
           )}
         </CardHeader>
         <CardContent>
