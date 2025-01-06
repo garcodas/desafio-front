@@ -65,7 +65,7 @@ const SignIn = () => {
       );
 
       if (response.data.data.User.RoleId === 1) {
-        navigate("/admin/product-category");
+        navigate("/orders");
         return;
       }
 

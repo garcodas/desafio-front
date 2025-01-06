@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Order, OrderDetailsProps } from "@/types/order";
+import numeral from "numeral";
 
 const OrderList = ({ orders }: OrderDetailsProps) => {
   return (
@@ -32,7 +33,7 @@ const OrderList = ({ orders }: OrderDetailsProps) => {
               <TableCell>{user.Address}</TableCell>
               <TableCell>{user.Phone}</TableCell>
               <TableCell>{user.Email}</TableCell>
-              <TableCell>{user.Total}</TableCell>
+              <TableCell>Q {numeral(user.Total).format("Q0,0.00")}</TableCell>
               <TableCell>{user.Status?.Name}</TableCell>
             </TableRow>
           ))}
